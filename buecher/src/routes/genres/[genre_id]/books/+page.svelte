@@ -1,22 +1,73 @@
 <script>
   export let data;
   let genre = data.genre;
+  let books = data.books;
+
+  let search = '';
+  let sortField = 'title';
+  let sortDirection = 'asc';
+
+  $: filteredBooks = books
+    .filter(book =>
+      book.title.toLowerCase().includes(search.toLowerCase()) ||
+      book.author.toLowerCase().includes(search.toLowerCase())
+    )
+    .sort((a, b) => {
+      const aField = a[sortField]?.toString().toLowerCase() || '';
+      const bField = b[sortField]?.toString().toLowerCase() || '';
+
+      if (aField < bField) return sortDirection === 'asc' ? -1 : 1;
+      if (aField > bField) return sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+  function toggleSort(field) {
+    if (sortField === field) {
+      sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      sortField = field;
+      sortDirection = 'asc';
+    }
+  }
 </script>
 
-<h1>Genre bearbeiten</h1>
+<h1>Bücher im Genre: {genre.name}</h1>
+<p>{genre.description}</p>
 
-<form method="POST">
-  <input type="hidden" name="_id" value={genre._id} />
+<input
+  type="text"
+  placeholder="Suche Titel oder Autor..."
+  bind:value={search}
+  class="form-control mb-3"
+  style="max-width: 400px;"
+/>
 
-  <div class="mb-3">
-    <label for="name" class="form-label">Name</label>
-    <input type="text" id="name" name="name" class="form-control" bind:value={genre.name} required />
-  </div>
-
-  <div class="mb-3">
-    <label for="description" class="form-label">Beschreibung</label>
-    <textarea id="description" name="description" class="form-control" rows="3">{genre.description}</textarea>
-  </div>
-
-  <button type="submit" formaction="?/update" class="btn btn-primary">💾 Speichern</button>
-</form>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th style="cursor:pointer" on:click={() => toggleSort('title')}>
+        Titel {sortField === 'title' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}
+      </th>
+      <th style="cursor:pointer" on:click={() => toggleSort('author')}>
+        Autor {sortField === 'author' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}
+      </th>
+      <th style="cursor:pointer" on:click={() => toggleSort('year')}>
+        Jahr {sortField === 'year' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {#each filteredBooks as book}
+      <tr>
+        <td><a href={`/books/${book._id}`}>{book.title}</a></td>
+        <td>{book.author}</td>
+        <td>{book.year}</td>
+      </tr>
+    {/each}
+    {#if filteredBooks.length === 0}
+      <tr>
+        <td colspan="3">Keine Bücher gefunden.</td>
+      </tr>
+    {/if}
+  </tbody>
+</table>

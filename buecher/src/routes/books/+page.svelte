@@ -1,5 +1,4 @@
 <script>
-  import { page } from '$app/stores';
   export let data;
   let books = data.books;
 
@@ -65,12 +64,13 @@
   <tbody>
     {#each filteredBooks as book}
       <tr>
-        <td data-label="Titel"><a href={`/books/${book._id}`}>{book.title}</a></td>
-        <td data-label="Autor">{book.author}</td>
-        <td data-label="Jahr">{book.year}</td>
-        <td data-label="Genre">{book.genre}</td>
-        <td data-label="Aktionen">
+        <td><a href={`/books/${book._id}`}>{book.title}</a></td>
+        <td>{book.author}</td>
+        <td>{book.year}</td>
+        <td>{book.genre}</td>
+        <td>
           <a href={`/books/${book._id}`} class="me-2">✏️ Bearbeiten</a>
+
           <form method="POST" action="?/delete" style="display:inline;">
             <input type="hidden" name="_id" value={book._id} />
             <button
