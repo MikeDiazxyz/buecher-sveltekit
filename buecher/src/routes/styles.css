@@ -1,0 +1,200 @@
+/* Überschriften */
+h1 {
+    color: orangered;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: orangered;
+    border-color: orangered;
+    color: white;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #cc4400;
+    border-color: #cc4400;
+    color: white;
+}
+
+/* Tabelle */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+thead tr {
+    background-color: orangered;
+    color: white;
+}
+
+thead th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+tbody tr {
+    background-color: #fff;
+    transition: background-color 0.2s ease;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #ffe5d0;
+}
+
+tbody td {
+    padding: 0.75rem 1rem;
+    vertical-align: middle;
+    font-size: 0.95rem;
+}
+
+/* Genre-Beschreibung: Zeilenumbruch ermöglichen, langes Wort umbrechen, Zeilen sauber brechen */
+table tbody td[data-label="Beschreibung"] {
+    white-space: normal;       /* Zeilenumbruch erlauben */
+    word-wrap: break-word;     /* Lange Wörter umbrechen */
+    overflow-wrap: break-word; /* Langwörter umbrechen */
+    word-break: break-word;    /* Bricht auch bei sehr langen Wörtern */
+    line-break: strict;        /* Strenger Zeilenumbruch für bessere Optik */
+}
+
+/* Links */
+a {
+    color: orangered;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #cc4400;
+    text-decoration: underline;
+}
+
+/* Formular-Inputs */
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    border: 1px solid #ccc;
+    border-radius: 0.3rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+    border-color: orangered;
+    outline: none;
+}
+
+/* Buttons im Tabellen-Actionbereich */
+.btn-outline-danger {
+    color: orangered;
+    border-color: orangered;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border-radius: 0.3rem;
+    background-color: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-outline-danger:hover {
+    background-color: orangered;
+    color: white;
+}
+
+/* Container für die Inhalte */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Responsive Anpassungen für Tabellen */
+@media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead tr {
+        display: none;
+    }
+
+    tbody tr {
+        margin-bottom: 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        padding: 1rem;
+        background-color: white;
+    }
+
+    tbody td {
+        padding: 0.5rem 1rem 0.25rem 1rem; /* oben, rechts, unten, links */
+        text-align: left; /* linksbündig */
+        position: relative;
+        padding-left: 0; /* kein extra Padding mehr links */
+        font-size: 0.95rem;
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        line-break: strict;
+        display: flex;
+        flex-direction: column;
+    }
+
+    tbody td::before {
+        content: attr(data-label);
+        position: static;
+        width: auto;
+        padding: 0 0 0.25rem 0;
+        font-weight: 700;
+        text-align: left;
+        color: orangered;
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        line-break: strict;
+        display: block;
+    }
+
+    /* Buttons full width on mobile */
+    .btn-outline-danger {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    /* Links im Aktionen Bereich als Block */
+    tbody td[data-label="Aktionen"] a {
+        display: inline-block;
+        margin-bottom: 0.5rem;
+        color: orangered;
+    }
+
+    tbody td[data-label="Aktionen"] a:hover {
+        color: #cc4400;
+    }
+}
